@@ -1,6 +1,6 @@
 name:                snap-app
 version:             0.1.0.0
-synopsis:            My Amazing Blog
+synopsis:            My first Haskell Web Application
 description:         Please see README.md
 homepage:            http://github.com/AbhijeetPawar/blog#readme
 license:             BSD3
@@ -21,6 +21,18 @@ Flag old-base
   default: False
   manual: False
 
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Handler.EchoHandler
+  build-depends:       base
+                     , bytestring
+                     , MonadCatchIO-transformers
+                     , mtl
+                     , snap-core
+  default-language:    Haskell2010
+
+          
 Executable snap-app
   hs-source-dirs: src
   main-is: Main.hs
@@ -65,3 +77,21 @@ Executable snap-app
     else
       ghc-options: -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2
                    -fno-warn-orphans
+
+test-suite test
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      test
+  main-is:             Spec.hs
+  build-depends:       base
+                     , snap-app
+                     , hspec
+                     , HUnit
+                     , snap-core
+                     , containers
+  ghc-options:         -threaded -rtsopts -with-rtsopts=-N
+  default-language:    Haskell2010
+
+
+source-repository head
+  type:     git
+  location: https://github.com/AbhijeetPawar/blog
