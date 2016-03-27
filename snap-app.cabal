@@ -13,21 +13,11 @@ build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
 
-Flag development
-  Description: Whether to build the server in development (interpreted) mode
-  Default: False
-
-Flag old-base
-  default: False
-  manual: False
-
-
 library
   hs-source-dirs:      src
   exposed-modules:     Handler.EchoHandler
   build-depends:       base
                      , bytestring
-                     , MonadCatchIO-transformers
                      , mtl
                      , snap-core
   default-language:    Haskell2010
@@ -36,10 +26,11 @@ library
 Executable snap-app
   hs-source-dirs: src
   main-is: Main.hs
-           
-  default-language:    Haskell2010
+  
   Build-depends:
-                bytestring                
+                base
+              , lens
+              , bytestring                
               , heist                     
               , MonadCatchIO-transformers 
               , mtl                       
@@ -50,35 +41,12 @@ Executable snap-app
               , text                      
               , time                      
               , xmlhtml                   
+  default-language:    Haskell2010
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N
+  other-modules: Application
+               , Site
 
-  if flag(old-base)
-    build-depends:
-                  base
-                , lens                     
-  else
-    build-depends:
-                  base
-                , lens
-
-  if flag(development)
-    build-depends:
-      snap-loader-dynamic
-    cpp-options: -DDEVELOPMENT
-    -- In development mode, speed is already going to suffer, so skip
-    -- the fancy optimization flags.  Additionally, disable all
-    -- warnings.  The hint library doesn't give an option to execute
-    -- compiled code when there were also warnings, so disabling
-    -- warnings allows quicker workflow.
-    ghc-options: -threaded -w
-  else
-    if impl(ghc >= 6.12.0)
-      ghc-options: -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2
-                   -fno-warn-orphans -fno-warn-unused-do-bind
-    else
-      ghc-options: -threaded -Wall -fwarn-tabs -funbox-strict-fields -O2
-                   -fno-warn-orphans
-
-test-suite test
+test-suite snap-app-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   main-is:             Spec.hs
@@ -90,8 +58,9 @@ test-suite test
                      , containers
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
+  other-modules: Handler.EchoHandlerSpec
 
 
 source-repository head
   type:     git
-  location: https://github.com/AbhijeetPawar/blog
+  location: https://github.com/AbhijeetPawar/snap-app
