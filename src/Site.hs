@@ -36,16 +36,11 @@ handleNewUser = undefined
 
 
 ------------------------------------------------------------------------------
--- | Handle new user form submit
-statusHandler = method GET (modifyResponse $ setResponseCode 200)
-
-------------------------------------------------------------------------------
 -- | The application's routes.
 routes :: [(ByteString, Handler App App ())]
 routes = [ ("/login",    handleLogin)
          , ("/logout",   handleLogout)
          , ("/new_user", handleNewUser)
-         , ("/status",   statusHandler)
          , ("",          serveDirectory "static")
          ]
 
@@ -54,6 +49,6 @@ routes = [ ("/login",    handleLogin)
 -- | The application initializer.
 app :: SnapletInit App App
 app = makeSnaplet "app" "An snaplet example application." Nothing $ do
-    a <- nestSnaplet "api" api apiInit
+    api <- nestSnaplet "api" api apiInit
     addRoutes routes
-    return $ App a
+    return $ App api
