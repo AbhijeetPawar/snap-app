@@ -15,40 +15,40 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Handler.EchoHandler
   build-depends:       base
                      , bytestring
                      , mtl
                      , snap-core
   default-language:    Haskell2010
 
-          
+
 Executable snap-app
   hs-source-dirs: src
   main-is: Main.hs
-  
+
   Build-depends:
                 base
               , lens
-              , bytestring                
-              , heist                     
-              , MonadCatchIO-transformers 
-              , mtl                       
-              , snap                      
-              , snap-core                 
-              , snap-server               
-              , snap-loader-static        
-              , text                      
-              , time                      
-              , xmlhtml                   
+              , bytestring
+              , heist
+              , MonadCatchIO-transformers
+              , mtl
+              , snap
+              , snap-core
+              , snap-server
+              , snap-loader-static
+              , text
+              , time
+              , xmlhtml
   default-language:    Haskell2010
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   other-modules: Application
                , Site
+               , Api.Core
 
 test-suite snap-app-test
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
+  hs-source-dirs:      test, src
   main-is:             Spec.hs
   build-depends:       base
                      , snap-app
@@ -58,7 +58,6 @@ test-suite snap-app-test
                      , containers
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
   default-language:    Haskell2010
-  other-modules: Handler.EchoHandlerSpec
 
 
 source-repository head
