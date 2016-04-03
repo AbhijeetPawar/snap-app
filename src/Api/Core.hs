@@ -7,7 +7,7 @@ import Snap.Snaplet
 import Data.ByteString
 
 ------------------------------------------------------------------------------
--- | Our Custom Api Snaplet.
+-- | Our Base Api Snaplet.
 data Api = Api
 
 statusHandler :: MonadSnap m => m ()
