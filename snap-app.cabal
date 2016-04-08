@@ -24,12 +24,14 @@ library
                      , snap-core
                      , snap-server
                      , snap-loader-static
+                     , snaplet-postgresql-simple
                      , text
                      , time
                      , aeson
   exposed-modules:     Site
                      , Api.Core
                      , Api.Types
+                     , Api.Service.TodoService
   other-modules:       Application
   default-language:    Haskell2010
 
@@ -52,26 +54,25 @@ executable snap-app
 
 test-suite suite
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test, src
+  hs-source-dirs:      test
   main-is:             Spec.hs
   build-depends:       base
                      , snap-app
+                     , hspec
+                     , hspec-snap
+                     , HUnit
                      , snap
                      , snap-core
                      , bytestring
-                     , hspec
-                     , HUnit
                      , containers
                      , text
                      , aeson
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  other-modules:       Api.Core
-                     , Api.CoreSpec
-                     , Api.Types
+  other-modules:       Api.CoreSpec
                      , Api.TypesSpec
   default-language:    Haskell2010
 
 
 source-repository head
   type:     git
-  location: https://github.com/AbhijeetPawar/snap-app
+  location: https://github.com/AbhijeetPawar/snap-app.git

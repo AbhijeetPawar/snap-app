@@ -4,6 +4,7 @@ module Api.Types where
 import           Control.Monad
 import           Data.Aeson
 import           Data.Text
+import           Snap.Snaplet.PostgresqlSimple
 import           Prelude                       hiding (id)
 
 data Todo = Todo
@@ -26,3 +27,9 @@ instance FromJSON Todo where
 
 instance ToJSON Todo where
     toJSON (Todo id text status) = object ["id" .= id, "text" .= text, "status" .= status]
+
+
+instance FromRow Todo where
+  fromRow = Todo <$> field
+                 <*> field
+                 <*> field
