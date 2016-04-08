@@ -2,7 +2,7 @@ name:                snap-app
 version:             0.1.0.0
 synopsis:            My first Haskell Web Application
 description:         Please see README.md
-homepage:            http://github.com/AbhijeetPawar/blog#readme
+homepage:            http://github.com/AbhijeetPawar/snapa-app#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Abhijeet Pawar
