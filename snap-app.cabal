@@ -29,9 +29,9 @@ library
                      , time
                      , aeson
   exposed-modules:     Site
-                     , Api.Core
-                     , Api.Types
-                     , Api.Service.TodoService
+                     , Model.Todo
+                     , Controller.Login
+                     , Controller.Todos
   other-modules:       Application
   default-language:    Haskell2010
 
@@ -68,8 +68,8 @@ test-suite suite
                      , text
                      , aeson
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
-  other-modules:       Api.CoreSpec
-                     , Api.TypesSpec
+  other-modules:       SiteSpec
+                     , Model.TodoSpec
   default-language:    Haskell2010
 
 

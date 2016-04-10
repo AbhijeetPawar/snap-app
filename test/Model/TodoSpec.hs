@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Api.TypesSpec (spec) where
+module Model.TodoSpec (spec) where
 
-import Api.Types
-import Data.Text
-import Data.Aeson
-import Test.Hspec
+import           Data.Aeson
+import           Data.Text
+import           Model.Todo
+import           Test.Hspec
 
 spec :: SpecWith ()
 spec =

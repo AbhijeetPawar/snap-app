@@ -1,11 +1,14 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
-module Api.Types where
+module Model.Todo where
 
+import           Application
 import           Control.Monad
 import           Data.Aeson
 import           Data.Text
-import           Snap.Snaplet.PostgresqlSimple
+import Snap.Core
 import           Prelude                       hiding (id)
+import           Snap.Snaplet.PostgresqlSimple
 
 data Todo = Todo
             { id     :: Integer
@@ -13,9 +16,11 @@ data Todo = Todo
             , status :: Bool
             } deriving (Eq, Show)
 
-
+------------------------------------------------------------------------------
+-- | Instances
 instance Ord Todo where
   compare (Todo id1 _ _) (Todo id2 _ _) = compare id1 id2
+
 
 
 instance FromJSON Todo where
@@ -26,10 +31,17 @@ instance FromJSON Todo where
     parseJSON _          = mzero
 
 instance ToJSON Todo where
-    toJSON (Todo id text status) = object ["id" .= id, "text" .= text, "status" .= status]
-
+    toJSON (Todo id text status) = object [ "id" .= id
+                                          , "text" .= text
+                                          , "status" .= status
+                                          ]
 
 instance FromRow Todo where
   fromRow = Todo <$> field
                  <*> field
                  <*> field
+
+------------------------------------------------------------------------------
+-- | CRUD
+getAllTodos :: AppHandler [Todo]
+getAllTodos = query_ "SELECT * FROM todos"
