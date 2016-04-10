@@ -4,6 +4,7 @@ module Controller.Todos(routes) where
 import           Application
 import           Data.Aeson      (encode)
 import           Data.ByteString
+import           Data.Monoid
 import           Model.Todo
 import           Snap.Core
 import           Snap.Snaplet
@@ -16,5 +17,7 @@ getTodos = do
      writeLBS . encode $ (todos :: [Todo])
 
 
+base = "/todos"
+
 routes :: [(ByteString, AppHandler ())]
-routes = [("/", method GET getTodos)]
+routes = [(base <> "/get", method GET getTodos)]

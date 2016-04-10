@@ -6,20 +6,24 @@
 -- together and is exported by this module.
 module Site
   ( app
-  , statusHandler
+  , routes
+  , initDb
   ) where
 
 ------------------------------------------------------------------------------
 import           Control.Applicative
+import           Control.Monad.IO.Class        (liftIO)
+import           Control.Monad.Reader
+import qualified Controller.Exception          as Ex
+import qualified Controller.Login              as Login
+import qualified Controller.Todos              as Todos
 import           Data.ByteString               (ByteString)
 import           Data.Monoid
 import qualified Data.Text                     as T
 import           Snap.Core
 import           Snap.Snaplet
-import           Snap.Snaplet.PostgresqlSimple (pgsInit)
+import qualified Snap.Snaplet.PostgresqlSimple as P
 import           Snap.Util.FileServe
-import qualified Controller.Login as Login
-import qualified Controller.Todos as Todos
 ------------------------------------------------------------------------------
 import           Application
 
@@ -34,12 +38,19 @@ routes = Login.routes <|>
          Todos.routes <|>
          [ ("/status",   statusHandler)
          , ("",          serveDirectory "static")
-         ]
+         ] <|>
+         Ex.routes
+
+
+initDb :: ReaderT (Snaplet P.Postgres) IO ()
+initDb = do P.execute_ "CREATE TABLE todos (id SERIAL, text TEXT, status BOOLEAN)"
+            return ()
 
 ------------------------------------------------------------------------------
 -- | The application initializer.
 app :: SnapletInit App App
 app = makeSnaplet "app" "An snaplet example application." Nothing $ do
-    db <- nestSnaplet "db" db pgsInit
+    db <- nestSnaplet "db" db P.pgsInit
+--    liftIO $ runReaderT initDb db
     addRoutes routes
     return $ App db

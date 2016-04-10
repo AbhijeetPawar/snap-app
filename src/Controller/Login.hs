@@ -16,7 +16,7 @@ handleLogout = undefined
 
 ------------------------------------------------------------------------------
 -- | Handle new user form submit
-handleNewUser = undefined
+handleNewUser = writeLBS "Hello new User"
 
 routes :: [(ByteString, AppHandler ())]
 routes = [ ("/login",    handleLogin)

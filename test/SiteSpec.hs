@@ -1,17 +1,16 @@
 {-# LANGUAGE OverloadedStrings #-}
 module SiteSpec (spec) where
 
-import           Snap.Test
-import           Test.Hspec
-import qualified Data.Map     as M
+import qualified Data.Map        as M
 import           Snap.Core
-import           Snap.Snaplet
+import           Test.Hspec
+import qualified Test.Hspec.Snap as T
 
-import           Site
+import Runner (specRunner)
+
 
 spec :: Spec
-spec =
-  describe "GET /status" $
+spec = specRunner $ do
+  describe "GET /status" $ do
      it "responds with 200" $
-        do response <- runHandler (get "/status" M.empty) statusHandler
-           assertSuccess response
+        T.get' "/status" (M.empty) >>= T.should200

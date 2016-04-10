@@ -6,8 +6,8 @@ import           Application
 import           Control.Monad
 import           Data.Aeson
 import           Data.Text
-import Snap.Core
 import           Prelude                       hiding (id)
+import           Snap.Core
 import           Snap.Snaplet.PostgresqlSimple
 
 data Todo = Todo
