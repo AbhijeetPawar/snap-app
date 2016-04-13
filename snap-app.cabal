@@ -25,16 +25,21 @@ library
                      , snap-server
                      , snap-loader-static
                      , snaplet-postgresql-simple
+                     , postgresql-orm
                      , text
                      , time
                      , aeson
                      , transformers
+                     , configurator
+                     , directory
+                     , filepath
   exposed-modules:     Site
                      , Model.Todo
                      , Controller.Login
                      , Controller.Todos
                      , Controller.Exception
   other-modules:       Application
+                     , Util
   default-language:    Haskell2010
 
 
